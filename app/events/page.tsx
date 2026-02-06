@@ -2,14 +2,12 @@ import React from "react";
 import EventCard from "@/components/EventCard";
 import { IEvent } from "@/models/event.model";
 import { cacheLife } from "next/cache";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import { getAllEvents } from "@/lib/actions/event.actions";
 
 const EventsPage = async () => {
   "use cache";
   cacheLife("hours");
-  const response = await fetch(`${BASE_URL}/api/events`);
-  const { events } = await response.json();
+  const events = await getAllEvents();
 
   return (
     <section className="flex flex-col gap-10">
